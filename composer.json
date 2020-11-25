@@ -12,7 +12,7 @@
     },
     "extra": {
         "download-dist": {
-            "url": "https://github.com/transformstudios/front/releases/download/{$version}/dist.tar.gz",
+            "url": "https://github.com/transformstudios/front-statamic-v3/releases/download/{$version}/dist.tar.gz",
             "path": "dist"
         },
         "statamic": {
