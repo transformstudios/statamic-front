@@ -1,0 +1,19 @@
+{
+    "name": "transformstudios/front",
+    "autoload": {
+        "psr-4": {
+            "TransformStudios\\Front\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Front",
+            "description": "Statamic Front addon"
+        },
+        "laravel": {
+            "providers": [
+                "TransformStudios\\Front\\ServiceProvider"
+            ]
+        }
+    }
+}
