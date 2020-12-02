@@ -13,6 +13,10 @@ class ServiceProvider extends AddonServiceProvider
         __DIR__.'/../dist/js/cp.js',
     ];
 
+    protected $stylesheets = [
+        __DIR__.'/../resources/css/cp.css',
+    ];
+
     public function boot()
     {
         parent::boot();
