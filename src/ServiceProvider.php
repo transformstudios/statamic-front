@@ -17,6 +17,10 @@ class ServiceProvider extends AddonServiceProvider
         __DIR__.'/../resources/css/cp.css',
     ];
 
+    protected $tags = [
+        FrontTags::class,
+    ];
+
     public function boot()
     {
         parent::boot();
