@@ -16,7 +16,7 @@ class FrontTags extends Tags
      */
     public function scripts()
     {
-        if (! config('front.front_end')) {
+        if (! $this->isConfigured()) {
             return;
         }
 
@@ -29,5 +29,12 @@ class FrontTags extends Tags
             'email' => $user->email(),
             'hash' => hash_hmac('sha256', $user->email(), config('front.secret_key')),
         ])->render();
+    }
+
+    private function isConfigured(): bool
+    {
+        return config('front.front_end') &&
+            config('front.chat_id') &&
+            config('front.secret_key');
     }
 }
