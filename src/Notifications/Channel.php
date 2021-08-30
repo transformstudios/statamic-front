@@ -2,33 +2,71 @@
 
 namespace TransformStudios\Front\Notifications;
 
+use Illuminate\Http\Client\Response;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Statamic\Auth\User;
 
 class Channel
 {
     /**
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, Notification $notification):  bool
     {
-        $data = $notification->toArray($notifiable);
+        $data = $this->data($notifiable, $notification);
 
-        $channel = config('front.channel');
+        if ($conversationId = $notifiable->get('conversation_id')) {
+            return tap(
+                $this->post('conversations', $conversationId, $data),
+                fn (Response $response) => $this->removeConversationId($notifiable, $data)
+            )->successful();
+        }
 
-        $response = Http::withToken(config('front.api_token'))
-            ->post(
-                "https://api2.frontapp.com/channels/$channel/messages",
-                [
-                    'subject' => $data['subject'],
-                    'body' => view("front::notifications.{$data['event']}", $data)->render(),
-                    'to' => [$data['email']],
-                    'options' => ['archive' => false],
-                ]
-            );
+        return tap(
+            $this->post('channels', config('front.channel'), $data),
+            fn (Response $response) => $this->saveConversationId($notifiable, $response)
+        )->successful();
+    }
 
-        $response->throw();
+    private function data($notifiable, $notification): array
+    {
+        $data = $notification->toArray();
 
-        return true;
+        return [
+            'body' => view("front::notifications.{$data['event']}", $data)->render(),
+            'options' => ['archive' => false],
+            'subject' => $data['subject'],
+            'to' => [$notifiable->email()],
+        ];
+    }
+
+    private function post(string $segment, string $id, array $data): Response
+    {
+        return Http::withToken(config('front.api_token'))
+            ->baseUrl('https://api2.frontapp.com')
+            ->post("/$segment/$id/messages", $data)
+            ->throw();
+    }
+
+    private function getConversationId(Response $response): string
+    {
+        return last(explode(
+            '/',
+            Arr::get($response, '_links.related.conversation')
+        ));
+    }
+
+    private function removeConversationId(User $user, array $data)
+    {
+        if (Arr::get($data, 'is_up')) {
+            $user->remove('conversation_id')->save();
+        }
+    }
+
+    private function saveConversationId(User $user, Response $response)
+    {
+        $user->set('conversation_id', $this->getConversationId($response))->save();
     }
 }
