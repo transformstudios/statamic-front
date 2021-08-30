@@ -30,9 +30,14 @@ class Channel
         )->successful();
     }
 
-    private function data($notifiable, $notification): array
+    private function data(User $notifiable, $notification): array
     {
-        $data = $notification->toArray();
+        $data = array_merge(
+            $notification->toArray(),
+            [
+                'name' => $notifiable->get('name'),
+            ]
+        );
 
         return [
             'body' => view("front::notifications.{$data['event']}", $data)->render(),
