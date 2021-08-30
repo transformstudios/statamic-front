@@ -1,13 +1,14 @@
-<p>Hello {{ email }}. 👋</p>
+<p>Hello {{ name or 'there' }}. 👋</p>
 
-Our global network of monitoring servers has reported that a previously down site is now back up.
+<p>Our global network of monitoring servers has reported that a previously down site is now back up.</p>
 
-The error details are below:
+<p>The error details are below:</p>
 
-* Name of Check: {{ test }}
-* Monitor Type: {{ type }}
-* Location(s): {{ locations }}
-* Alert Output: {{ output }}
+<ul>
+    <li>Name of Check: {{ test }}</li>
+    <li>Monitor Type: {{ type }}</li>
+    <li>Location(s): {{ locations }}</li>
+    <li>Alert Output: {{ output }}</li>
+</ul>
 
-
-Feel free to reply to this email with any questions.
+<p>Feel free to reply to this email with any questions.</p>

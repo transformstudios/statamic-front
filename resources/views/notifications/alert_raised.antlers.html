@@ -1,16 +1,18 @@
-Hello {{ email }}. 👋
+<h2>Hello {{ name or 'There' }}. 👋</h2>
 
-Our global network of monitoring servers has reported an error one of your web property checks. Our 1st priority is
+<p>Our global network of monitoring servers has reported an error one of your web property checks. Our 1st priority is
 prompt resolution when any downtime or error is detected all while providing you full transparency of our progress on
 resolution. This message is to confirm we have started to investigate and will keep you updated on the progress until
-final resolution.
+final resolution.</p>
 
-The error details are below:
+<p>The error details are below:</p>
 
-* Name of Check: {{ test }}
-* Monitor Type: {{ type }}
-* Location(s): {{ locations }}
-* Alert Output: {{ output }}
+<ul>
+    <li>Name of Check: {{ test }}</li>
+    <li>Monitor Type: {{ type }}</li>
+    <li>Location(s): {{ locations }}</li>
+    <li>Alert Output: {{ output }}</li>
+</ul>
 
-Feel free to reply to this email with any questions, but rest assured we are working on resolution. Stay tuned for
-further updates...
+<p>Feel free to reply to this email with any questions, but rest assured we are working on resolution. Stay tuned for
+further updates...</p>
