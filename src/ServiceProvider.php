@@ -29,6 +29,12 @@ class ServiceProvider extends AddonServiceProvider
         parent::boot();
 
         $this->bootScript();
+
+        // needed for testing but not production
+        // $this->loadViewsFrom(
+        //     __DIR__.'/../resources/views',
+        //     'front'
+        // );
     }
 
     public function register()
