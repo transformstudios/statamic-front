@@ -46,13 +46,9 @@ abstract class TestCase extends OrchestraTestCase
         $app->make(Manifest::class)->manifest = [
             'transformstudios/front' => [
                 'id' => 'transformstudios/front',
-                'namespace' => 'TransformStudios\\Front\\',
+                'namespace' => 'TransformStudios\\Front',
             ],
         ];
-
-        Statamic::pushActionRoutes(function () {
-            return require_once realpath(__DIR__.'/../routes/actions.php');
-        });
     }
 
     protected function resolveApplicationConfiguration($app)
