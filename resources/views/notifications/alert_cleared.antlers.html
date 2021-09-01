@@ -60,9 +60,9 @@
         @media screen and (min-width:600px) {
             h1 { font-size: 36px !important; line-height: 48px !important; }
             .intro { font-size: 24px !important; line-height: 36px !important; }
-            
+
         }
-        
+
         /* MOBILE STYLES */
         @media screen and (max-width: 600px) {
 
@@ -79,7 +79,7 @@
           .mobile-no-radius {
            border-radius: 0px !important;
           }
-        
+
     </style>
  
 
@@ -126,15 +126,14 @@
                 <p>
                     The previously reported error is now resolved. The details for the resolved check are below:
                 </p>
-                
+
                 <ul>
                     <li>Name of Check: {{ test }}</li>
                     <li>Monitor Type: {{ type }}</li>
-                    <li>Location(s): {{ locations }}</li>
                     <li>Alert Output: {{ output }}</li>
-                    <li>Error Duration: </li>
+                    <li>Error Duration: {{ duration }}</li>
                 </ul>
-                
+
             <!-- This CTA was adapted from code from Campaign Monitor's buttons.cm. -->
 
                 <!--[if (gte mso 9)|(IE)]>
