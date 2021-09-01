@@ -20,7 +20,7 @@ class Channel
         if ($conversationId = $notifiable->get('conversation_id')) {
             return tap(
                 $this->post('conversations', $conversationId, $data),
-                fn (Response $response) => $this->removeConversationId($notifiable, $data)
+                fn (Response $response) => $this->removeConversationId($notifiable, $notification)
             )->successful();
         }
 
@@ -63,9 +63,9 @@ class Channel
         ));
     }
 
-    private function removeConversationId(User $user, array $data)
+    private function removeConversationId(User $user, Notification $notification)
     {
-        if (Arr::get($data, 'is_up')) {
+        if (Arr::get($notification->toArray(), 'is_up')) {
             $user->remove('conversation_id')->save();
         }
     }
