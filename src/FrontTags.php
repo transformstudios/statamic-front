@@ -20,17 +20,17 @@ class FrontTags extends Tags
             return;
         }
 
-        if (! $user = User::current()) {
-            return view('front::head', [
-                'chatId' => config('front.chat_id'),
-            ])->render();
+        if ($user = User::current()) {
+            $email = $user->email();
+            $hash = hash_hmac('sha256', $email, config('front.secret_key'));
+            $name = $user->get('name');
         }
 
         return view('front::head', [
             'chatId' => config('front.chat_id'),
-            'email' => $user->email(),
-            'hash' => hash_hmac('sha256', $user->email(), config('front.secret_key')),
-            'name' => $user->get('name'),
+            'email' => $email ?? null,
+            'hash' => $hash ?? null,
+            'name' => $name ?? null,
         ])->render();
     }
 
