@@ -33,7 +33,7 @@ class FrontTags extends Tags
 
     private function isConfigured(): bool
     {
-        return config('front.front_end') &&
+        return config('front.show_on_front_end') &&
             config('front.chat_id') &&
             config('front.secret_key');
     }

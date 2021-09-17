@@ -46,6 +46,10 @@ class ServiceProvider extends AddonServiceProvider
 
     private function bootScript()
     {
+        if (! config('front.show_on_control_panel')) {
+            return;
+        }
+
         View::composer('statamic::layout', function ($view) {
             if (! $user = User::current()) {
                 return;
