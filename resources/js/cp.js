@@ -13,6 +13,7 @@ Statamic.booted(() => {
                 {
                     chatId: frontConfig.chatId,
                     email: frontConfig.email,
+                    name: frontConfig.name,
                     userHash: frontConfig.hash,
                     useDefaultLauncher: true
                 }

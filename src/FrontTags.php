@@ -30,6 +30,7 @@ class FrontTags extends Tags
             'chatId' => config('front.chat_id'),
             'email' => $user->email(),
             'hash' => hash_hmac('sha256', $user->email(), config('front.secret_key')),
+            'name' => $user->get('name'),
         ])->render();
     }
 
