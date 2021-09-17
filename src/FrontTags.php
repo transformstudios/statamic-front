@@ -21,7 +21,9 @@ class FrontTags extends Tags
         }
 
         if (! $user = User::current()) {
-            return;
+            return view('front::head', [
+                'chatId' => config('front.chat_id'),
+            ])->render();
         }
 
         return view('front::head', [
