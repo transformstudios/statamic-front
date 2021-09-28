@@ -2,8 +2,10 @@
 
 namespace TransformStudios\Front\Tests\Unit;
 
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Statamic\Facades\User;
 use TransformStudios\Front\Notifications\Channel;
@@ -19,22 +21,28 @@ class NotificationTest extends TestCase
     /** @test */
     public function can_send_front_message()
     {
-        $user = User::make()
+        $user1 = User::make()
             ->email('erin@transformstudios.com')
             ->save();
+        $user2 = User::make()
+            ->email('erin@silentz.co')
+            ->save();
+
+        $users = collect([$user1, $user2]);
 
         $notification = new TestNotification([
             'date' => Carbon::now()->toDateTimeString(),
-            'name' => 'Erin Dalzell',
             'event' => 'alert_raised',
+            'id' => '123',
             'locations' => ['US Central'],
             'output' => 'HTTP WARNING: HTTP/1.1 403 Forbidden - 1220 bytes in 0.694 second response time',
             'subject' => 'Monitor Alert: Error Detected',
             'test' => 'Some Test',
             'type' => 'HTTP(S)',
+            'users' => $users,
         ]);
 
-        $this->assertTrue((new Channel)->send($user, $notification));
+        $this->assertTrue((new Channel)->send(new AnonymousNotifiable, $notification));
     }
 
     /** @test */
@@ -46,10 +54,11 @@ class NotificationTest extends TestCase
 
         $notification = new TestNotification([
             'date' => Carbon::now()->toDateTimeString(),
-            'email' => 'erin@transformstudios.com',
             'event' => 'alert_raised',
+            'id' => '123',
             'subject' => 'Monitor Alert: Error Detected',
             'test' => 'Some Test',
+            'users' => collect([$user]),
         ]);
 
         Http::fake(function ($request) {
@@ -63,9 +72,9 @@ class NotificationTest extends TestCase
             ], 200);
         });
 
-        $this->assertNull(User::findByEmail('erin@transformstudios.com')->get('conversation_id'));
-        $this->assertTrue((new Channel)->send($user, $notification));
-        $this->assertEquals('cnv_id', User::findByEmail('erin@transformstudios.com')->get('conversation_id'));
+        $this->assertNull(Cache::get('123'));
+        $this->assertTrue((new Channel)->send(new AnonymousNotifiable, $notification));
+        $this->assertEquals('cnv_id', Cache::get('123'));
     }
 
     /** @test */
@@ -73,16 +82,17 @@ class NotificationTest extends TestCase
     {
         $user = User::make()
             ->email('erin@transformstudios.com')
-            ->set('conversation_id', 'cnv_123')
             ->save();
 
         $notification = new TestNotification([
             'date' => Carbon::now()->toDateTimeString(),
             'email' => 'erin@transformstudios.com',
             'event' => 'alert_cleared',
+            'id' => '123',
             'is_up' => true,
             'subject' => 'Monitor Alert: Error Detected',
             'test' => 'Some Test',
+            'users' => collect([$user]),
         ]);
 
         Http::fake(function ($request) {
@@ -96,9 +106,10 @@ class NotificationTest extends TestCase
             ], 200);
         });
 
-        $this->assertNotNull(User::findByEmail('erin@transformstudios.com')->get('conversation_id'));
-        $this->assertTrue((new Channel)->send($user, $notification));
-        $this->assertNull(User::findByEmail('erin@transformstudios.com')->get('conversation_id'));
+        Cache::put('123', 'cnv_123');
+        $this->assertNotNull(Cache::get('123'));
+        $this->assertTrue((new Channel)->send(new AnonymousNotifiable, $notification));
+        $this->assertNull(Cache::get('123'));
     }
 
     /** @test */
@@ -106,33 +117,34 @@ class NotificationTest extends TestCase
     {
         $user = User::make()
             ->email('erin@transformstudios.com')
-            ->set('conversation_id', 'cnv_d9eeq8f')
             ->save();
 
         $notification = new TestNotification(
             [
                 'date' => Carbon::now()->toDateTimeString(),
-                'email' => 'erin@transformstudios.com',
                 'event' => 'alert_raised',
+                'id' => '123',
                 'subject' => 'Monitor Alert: Error Detected',
                 'test' => 'Some Test',
+                'users' => collect([$user]),
             ]
         );
 
         $anotherNotification = new TestNotification(
             [
                 'date' => Carbon::now()->toDateTimeString(),
-                'email' => 'erin@transformstudios.com',
                 'event' => 'alert_cleared',
+                'id' => '123',
                 'subject' => 'Monitor Alert: Error Cleared',
                 'test' => 'Some Test',
+                'users' => collect([$user]),
             ]
         );
         $channel = new Channel;
 
-        $this->assertTrue($channel->send($user, $notification));
+        $this->assertTrue($channel->send(new AnonymousNotifiable, $notification));
 
-        $this->assertTrue($channel->send($user, $anotherNotification));
+        $this->assertTrue($channel->send(new AnonymousNotifiable, $anotherNotification));
     }
 }
 

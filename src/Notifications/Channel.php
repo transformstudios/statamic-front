@@ -5,6 +5,7 @@ namespace TransformStudios\Front\Notifications;
 use Illuminate\Http\Client\Response;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Statamic\Auth\User;
 
@@ -15,35 +16,33 @@ class Channel
      */
     public function send($notifiable, Notification $notification):  bool
     {
-        $data = $this->data($notifiable, $notification);
+        $data = $this->data($notification);
 
-        if ($conversationId = $notifiable->get('conversation_id')) {
-            return tap(
-                $this->post('conversations', $conversationId, $data),
-                fn (Response $response) => $this->removeConversationId($notifiable, $notification)
-            )->successful();
+        $alertId = Arr::get($notification->toArray(), 'id');
+
+        if ($conversationId = Cache::get($alertId)) {
+            Cache::forget($alertId);
+
+            return $this->post('conversations', $conversationId, $data)->successful();
         }
 
-        return tap(
-            $this->post('channels', config('front.channel'), $data),
-            fn (Response $response) => $this->saveConversationId($notifiable, $response)
-        )->successful();
+        $response = $this->post('channels', config('front.channel'), $data);
+        Cache::forever($alertId, $this->getConversationId($response));
+
+        return $response->successful();
     }
 
-    private function data(User $notifiable, $notification): array
+    private function data($notification): array
     {
-        $data = array_merge(
-            $notification->toArray(),
-            [
-                'name' => $notifiable->get('name'),
-            ]
-        );
+        $data = $notification->toArray();
+
+        $emails = $data['users']->map(fn (User $user) => $user->email());
 
         return [
             'body' => view("front::notifications.{$data['event']}", $data)->render(),
             'options' => ['archive' => false],
             'subject' => $data['subject'],
-            'to' => [$notifiable->email()],
+            'to' => $emails,
         ];
     }
 
