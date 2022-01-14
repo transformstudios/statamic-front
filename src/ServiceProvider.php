@@ -24,11 +24,9 @@ class ServiceProvider extends AddonServiceProvider
         FrontTags::class,
     ];
 
-    public function boot()
+    public function bootAddon()
     {
-        parent::boot();
-
-        Statamic::booted(fn () => $this->bootScript());
+        $this->bootScript();
 
         // needed for testing but not production
         // $this->loadViewsFrom(
