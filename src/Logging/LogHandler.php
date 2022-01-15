@@ -2,10 +2,10 @@
 
 namespace TransformStudios\Front\Logging;
 
-use Error;
-use Illuminate\Support\Facades\Http;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as Monolog;
+use Statamic\Support\Arr;
+use Throwable;
 
 class LogHandler extends AbstractProcessingHandler
 {
@@ -17,27 +17,24 @@ class LogHandler extends AbstractProcessingHandler
 
     public function write(array $record): void
     {
-        $message = $record['message'];
+        $conversation = config('front.logging.conversation_id');
 
-        /** @var Error */
-        $error = $record['context']['exception'];
+        $data = $this->convertErrorToFrontMessage(Arr::get($record, 'context.exception'));
+        front()
+            ->post("/conversations/$conversation/comments", $data)
+            ->throw();
+    }
 
+    private function convertErrorToFrontMessage(Throwable $error): array
+    {
         $body = '**'.$error->getMessage().'**'.PHP_EOL;
         $body .= '* '.$error->getFile().' ('.$error->getLine().')'.PHP_EOL;
 
         $body .= collect($error->getTrace())
             ->take(10)
-            ->map(function (array $traceItem) {
-                return '* '.$traceItem['file'].' ('.$traceItem['line'].')';
-            })->implode(PHP_EOL);
+            ->map(fn (array $traceItem) => '* '.$traceItem['file'].' ('.$traceItem['line'].')')
+            ->implode(PHP_EOL);
 
-        $client = Http::withToken(config('front.api_token'))->baseUrl(
-            'https://api2.frontapp.com'
-        );
-        $conversation = 'cnv_enblj7z';
-
-        $client
-            ->post("/conversations/$conversation/comments", ['body' => $body])
-            ->throw();
+        return ['body' => $body];
     }
 }
