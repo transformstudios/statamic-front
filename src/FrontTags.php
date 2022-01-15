@@ -27,7 +27,7 @@ class FrontTags extends Tags
         }
 
         return view('front::head', [
-            'chatId' => config('front.chat_id'),
+            'chatId' => config('front.chat.id'),
             'email' => $email ?? null,
             'hash' => $hash ?? null,
             'name' => $name ?? null,
@@ -36,8 +36,8 @@ class FrontTags extends Tags
 
     private function isConfigured(): bool
     {
-        return config('front.show_on_front_end') &&
-            config('front.chat_id') &&
+        return config('front.chat.show_on_front_end') &&
+            config('front.chat.id') &&
             config('front.secret_key');
     }
 }

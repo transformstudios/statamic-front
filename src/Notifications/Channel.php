@@ -26,7 +26,7 @@ class Channel
             return $this->post('conversations', $conversationId, $data)->successful();
         }
 
-        $response = $this->post('channels', config('front.channel'), $data);
+        $response = $this->post('channels', config('front.notifications.channel'), $data);
         Cache::forever($alertId, $this->getConversationId($response));
 
         return $response->successful();

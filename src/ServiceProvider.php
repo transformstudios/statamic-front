@@ -44,7 +44,7 @@ class ServiceProvider extends AddonServiceProvider
 
     private function bootScript()
     {
-        if (! config('front.show_on_control_panel')) {
+        if (! config('front.chat.show_on_control_panel')) {
             return;
         }
 
@@ -56,7 +56,7 @@ class ServiceProvider extends AddonServiceProvider
             Statamic::provideToScript(
                 [
                     'front' => [
-                        'chatId' => config('front.chat_id'),
+                        'chatId' => config('front.chat.id'),
                         'email' => $user->email(),
                         'hash' => hash_hmac('sha256', $user->email(), config('front.secret_key')),
                     ],
