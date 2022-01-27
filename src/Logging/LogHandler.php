@@ -3,7 +3,6 @@
 namespace TransformStudios\Front\Logging;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as Monolog;
 use Statamic\Support\Arr;
@@ -22,14 +21,19 @@ class LogHandler extends AbstractProcessingHandler
         $conversation = config('front.logging.conversation_id');
 
         if (! $error = Arr::get($record, 'context.exception')) {
-            $logger = Log::build([
-                'driver' => 'daily',
-                'path' => storage_path('logs/front-logger.log'),
-            ]);
+            $errors = collect(
+                [
+                    'Request URL: '.request()->fullUrl(),
+                    'Request data: '.json_encode(request()->input()),
+                    'Error: '.json_encode($record),
+                ]
+            );
 
-            $logger->debug('Request URL: '.request()->fullUrl());
-            $logger->debug('Request data: '.json_encode(request()->input()));
-            $logger->debug('No actual exception', $record);
+            front()
+                ->post(
+                    "/conversations/$conversation/comments",
+                    ['body' => $errors->implode(PHP_EOL)]
+                )->throw();
 
             return;
         }
