@@ -3,6 +3,7 @@
 namespace TransformStudios\Front\Logging;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as Monolog;
 use Statamic\Support\Arr;
@@ -19,6 +20,19 @@ class LogHandler extends AbstractProcessingHandler
     public function write(array $record): void
     {
         $conversation = config('front.logging.conversation_id');
+
+        if (! $error = Arr::get($record, 'context.exception')) {
+            $logger = Log::build([
+                'driver' => 'daily',
+                'path' => storage_path('logs/front-logger.log'),
+            ]);
+
+            $logger->debug('Request URL: '.request()->fullUrl());
+            $logger->debug('Request data: '.json_encode(request()->input()));
+            $logger->debug('No actual exception', $record);
+
+            return;
+        }
 
         front()
             ->post(
@@ -37,7 +51,8 @@ class LogHandler extends AbstractProcessingHandler
         return collect([
                 '**'.$error->getMessage().'**',
                 '* '.$error->getFile().' ('.$error->getLine().')',
-            ])->merge($this->formatStackTrace($error));
+            ]
+        )->merge($this->formatStackTrace($error));
     }
 
     private function formatStackTrace(Throwable $error): Collection
