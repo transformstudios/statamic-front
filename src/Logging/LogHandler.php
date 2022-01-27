@@ -48,7 +48,10 @@ class LogHandler extends AbstractProcessingHandler
 
     private function formatErrorLines(Throwable $error): Collection
     {
-        return collect([
+        return collect(
+            [
+                'Request URL: '.request()->fullUrl(),
+                'Request data: '.json_encode(request()->input()),
                 '**'.$error->getMessage().'**',
                 '* '.$error->getFile().' ('.$error->getLine().')',
             ]
