@@ -10,6 +10,7 @@ return [
     ],
     'logging' => [
         'conversation_id' => env('FRONT_CONVERSATION_ID'),
+        'level' => env('FRONT_LOGGING_LEVEL', 'error'),
     ],
     'notifications' => [
         'channel' => env('FRONT_CHANNEL'),
