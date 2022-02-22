@@ -18,7 +18,9 @@ class LogHandler extends AbstractProcessingHandler
 
     public function write(array $record): void
     {
-        $conversation = config('front.logging.conversation_id');
+        if (! $conversation = config('front.logging.conversation_id')) {
+            return;
+        }
 
         if (! $error = Arr::get($record, 'context.exception')) {
             $errors = collect(
