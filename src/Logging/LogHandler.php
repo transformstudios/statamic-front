@@ -68,6 +68,12 @@ class LogHandler extends AbstractProcessingHandler
     {
         return collect($error->getTrace())
             ->take(10)
-            ->map(fn (array $traceItem) => '* '.$traceItem['file'].' ('.$traceItem['line'].')');
+            ->map(function (array $traceItem) {
+                if (! $file = Arr::get($traceItem, 'file')) {
+                    return '* '.json_encode($traceItem);
+                }
+
+                return '* '.$file.' ('.Arr::get($traceItem, 'line').')';
+            });
     }
 }
