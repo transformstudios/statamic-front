@@ -2,7 +2,7 @@
     "name": "transformstudios/front",
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^8.0",
+        "laravel/framework": "^8.0 || ^9.9",
         "pixelfear/composer-dist-plugin": "^0.1.4",
         "statamic/cms": "^3.0"
     },
