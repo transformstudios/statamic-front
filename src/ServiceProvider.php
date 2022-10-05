@@ -5,9 +5,11 @@ namespace TransformStudios\Front;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\View;
-use Statamic\Facades\User;
+use Statamic\Auth\User;
+use Statamic\Facades\User as UserFacade;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Statamic;
+use Statamic\Support\Arr;
 use TransformStudios\Front\Notifications\Channel;
 
 class ServiceProvider extends AddonServiceProvider
@@ -49,17 +51,18 @@ class ServiceProvider extends AddonServiceProvider
         }
 
         View::composer('statamic::layout', function ($view) {
-            if (! $user = User::current()) {
+            if (! $user = UserFacade::current()) {
                 return;
             }
 
             Statamic::provideToScript(
                 [
-                    'front' => [
+                    'front' => Arr::removeNullValues([
                         'chatId' => config('front.chat.id'),
                         'email' => $user->email(),
                         'hash' => hash_hmac('sha256', $user->email(), config('front.secret_key')),
-                    ],
+                        'name' => $user->name ?? $user->first_name.' '.$user->last_name,
+                    ]),
                 ]
             );
         });
