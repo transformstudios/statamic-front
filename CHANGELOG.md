@@ -1,9 +1,50 @@
 # Front Changelog
 
-All notable changes to this project will be documented in this file.
+## 1.10 - 2022-04-25
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
+### New
+- Support Laravel 9
+## 1.9.3 - 2022-03-03
 
+### Fix
+- If there's no file, show the whole error array
+## 1.9.2 - 2022-02-22
+
+### Fixed
+- Don't try to log if there's no config
+## 1.9.1 - 2022-01-27
+
+### Fixed
+- errors are actually logged now
+## 1.9 - 2022-01-27
+
+## New
+- add more error details to the log/notification
+## 1.8 - 2022-01-14
+
+### New
+- Refactor to use custom logger
+## 1.7.1 - 2021-09-30
+
+### Fixed
+- Addon loads properly now
+
+## 1.7 - 2021-09-28
+
+### Added
+- send notification to all configured people
+## 1.6.1 - 2021-09-17
+
+### Fixed
+- Handle non-logged in user better
+## 1.6 - 2021-09-17
+
+### Added
+- use user's name on front end, if logged in
+## 1.5 - 2021-09-17
+
+### Added
+- Show generic chat if not logged in
 ## 1.2.1 - 2021-04-26
 ### Fixed
 - Chat shows in CP again
