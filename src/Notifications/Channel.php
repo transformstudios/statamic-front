@@ -35,7 +35,7 @@ class Channel
             'body' => $notification->renderedView,
             'options' => ['archive' => false],
             'subject' => $notification->subject,
-            'to' => $to->email(),
+            'to' => [$to->email()],
         ];
     }
 
