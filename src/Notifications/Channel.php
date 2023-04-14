@@ -3,7 +3,6 @@
 namespace TransformStudios\Front\Notifications;
 
 use Illuminate\Http\Client\Response;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -14,35 +13,29 @@ class Channel
     /**
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function send($notifiable, Notification $notification):  bool
+    public function send(User $to, BaseNotification $notification): bool
     {
-        $data = $this->data($notification);
+        $data = $this->data($to, $notification);
 
-        $alertId = Arr::get($notification->toArray(), 'id');
-
-        if ($conversationId = Cache::get($alertId)) {
-            Cache::forget($alertId);
+        if ($conversationId = Cache::get($key = $notification->key)) {
+            Cache::forget($key);
 
             return $this->post('conversations', $conversationId, $data)->successful();
         }
 
         $response = $this->post('channels', config('front.notifications.channel'), $data);
-        Cache::forever($alertId, $this->getConversationId($response));
+        Cache::forever($key, $this->getConversationId($response));
 
         return $response->successful();
     }
 
-    private function data($notification): array
+    private function data(User $to, BaseNotification $notification): array
     {
-        $data = $notification->toArray();
-
-        $emails = $data['users']->map(fn (User $user) => $user->email());
-
         return [
-            'body' => view("front::notifications.{$data['event']}", $data)->render(),
+            'body' => $notification->renderedView,
             'options' => ['archive' => false],
-            'subject' => $data['subject'],
-            'to' => $emails,
+            'subject' => $notification->subject,
+            'to' => $to->email(),
         ];
     }
 
@@ -60,17 +53,5 @@ class Channel
             '/',
             Arr::get($response, '_links.related.conversation')
         ));
-    }
-
-    private function removeConversationId(User $user, Notification $notification)
-    {
-        if (Arr::get($notification->toArray(), 'is_up')) {
-            $user->remove('conversation_id')->save();
-        }
-    }
-
-    private function saveConversationId(User $user, Response $response)
-    {
-        $user->set('conversation_id', $this->getConversationId($response))->save();
     }
 }
