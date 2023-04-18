@@ -13,9 +13,9 @@ class Channel
     /**
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function send(User $to, BaseNotification $notification): bool
+    public function send($ignore, BaseNotification $notification): bool
     {
-        $data = $this->data($to, $notification);
+        $data = $this->data($notification);
 
         if ($conversationId = Cache::get($key = $notification->key)) {
             Cache::forget($key);
@@ -29,13 +29,13 @@ class Channel
         return $response->successful();
     }
 
-    private function data(User $to, BaseNotification $notification): array
+    private function data(BaseNotification $notification): array
     {
         return [
             'body' => $notification->renderedView,
             'options' => ['archive' => false],
             'subject' => $notification->subject,
-            'to' => [$to->email()],
+            'to' => $notification->users->map(fn (User $user) => $user->email())->all(),
         ];
     }
 
