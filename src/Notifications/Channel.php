@@ -17,9 +17,7 @@ class Channel
     {
         $data = $this->data($notification);
 
-        if ($conversationId = Cache::get($key = $notification->key)) {
-            Cache::forget($key);
-
+        if ($conversationId = Cache::pull($key = $notification->key)) {
             return $this->post('conversations', $conversationId, $data)->successful();
         }
 
