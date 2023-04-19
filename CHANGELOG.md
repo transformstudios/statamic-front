@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v1.12.1 - 2023-04-19
+
+### 🐛 Fixed
+
+- Update mix [@edalzell](https://github.com/edalzell) (#8)
+
 ## v1.12.0 - 2023-04-19
 
 ### 🚀 New
