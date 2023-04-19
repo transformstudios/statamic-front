@@ -1,5 +1,15 @@
 # Front Changelog
 
+## v1.12.0 - 2023-04-19
+
+### 🚀 New
+
+- Refactor Notifications [@edalzell](https://github.com/edalzell) (#7)
+
+### 🔧 Improved
+
+- 🔄 Synced file(s) with edalzell/.github [@edalzell](https://github.com/edalzell) (#6)
+
 ## v1.11.0 - 2022-10-05
 
 ### 🚀 New
