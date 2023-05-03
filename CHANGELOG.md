@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v1.13.0 - 2023-05-03
+
+### 🚀 New
+
+- Use livewire for front end [@edalzell](https://github.com/edalzell) (#9)
+
 ## v1.12.1 - 2023-04-19
 
 ### 🐛 Fixed
