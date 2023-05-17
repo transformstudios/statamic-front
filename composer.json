@@ -40,5 +40,10 @@
                 "TransformStudios\\Front\\ServiceProvider"
             ]
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "pixelfear/composer-dist-plugin": true
+        }
     }
 }
