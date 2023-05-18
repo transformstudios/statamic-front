@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v2.0 - 2023-05-18
+
+### 🚀 New
+
+- Statamic v4 [@edalzell](https://github.com/edalzell) (#10)
+
 ## v1.13.0 - 2023-05-03
 
 ### 🚀 New
