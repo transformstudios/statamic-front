@@ -15,12 +15,13 @@ use TransformStudios\Front\Notifications\Channel;
 
 class ServiceProvider extends AddonServiceProvider
 {
-    protected $scripts = [
-        __DIR__.'/../dist/js/cp.js',
-    ];
-
-    protected $stylesheets = [
-        __DIR__.'/../resources/css/cp.css',
+    protected $vite = [
+        'input' => [
+            'resources/css/cp.css',
+            'resources/js/cp.js',
+        ],
+        'publicDirectory' => 'dist',
+        'hotFile' => __DIR__.'/../dist/hot',
     ];
 
     public function bootAddon()
