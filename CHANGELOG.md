@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v2.0.1 - 2023-06-09
+
+### 🐛 Fixed
+
+- Make compatible w/ latest version [@edalzell](https://github.com/edalzell) (#11)
+
 ## v2.0 - 2023-05-18
 
 ### 🚀 New
