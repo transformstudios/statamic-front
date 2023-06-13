@@ -5,16 +5,18 @@ namespace TransformStudios\Front;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\View;
-use Livewire\Livewire;
 use Statamic\Facades\User as UserFacade;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Statamic;
 use Statamic\Support\Arr;
-use TransformStudios\Front\Http\Livewire\Scripts;
 use TransformStudios\Front\Notifications\Channel;
 
 class ServiceProvider extends AddonServiceProvider
 {
+    protected $routes = [
+        'actions' => __DIR__.'/../routes/actions.php',
+    ];
+
     protected $vite = [
         'input' => [
             'resources/css/cp.css',
