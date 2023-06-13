@@ -28,8 +28,6 @@ class ServiceProvider extends AddonServiceProvider
     {
         $this->bootScript();
 
-        Livewire::component('front.scripts', Scripts::class);
-
         // needed for testing but not production
         // $this->loadViewsFrom(
         //     __DIR__.'/../resources/views',
