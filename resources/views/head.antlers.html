@@ -1,0 +1,18 @@
+<script src='https://chat-assets.frontapp.com/v1/chat.bundle.js'></script>
+<script>
+    window.addEventListener('load', (event) => {
+        fetch('/front/config')
+            .then(response => response.json())
+            .then(options => {
+                window.FrontChat(
+                    'init', {
+                        chatId: options.chatId,
+                        email: options.email,
+                        name: options.name,
+                        userHash: options.hash,
+                        useDefaultLauncher: true
+                    }
+                );
+            })
+    });
+</script>
