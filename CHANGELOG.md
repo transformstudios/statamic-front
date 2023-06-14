@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v2.0.2 - 2023-06-14
+
+### 🐛 Fixed
+
+- Remove Livewire [@edalzell](https://github.com/edalzell) (#12)
+
 ## v2.0.1 - 2023-06-09
 
 ### 🐛 Fixed
