@@ -17,18 +17,22 @@ class LogHandler extends AbstractProcessingHandler
         parent::__construct(Monolog::toMonologLevel($channelConfig['level'] ?? Monolog::DEBUG));
     }
 
-    public function write(LogRecord $record): void
+    public function write(array|LogRecord $record): void
     {
         if (! $conversation = config('front.logging.conversation_id')) {
             return;
         }
 
-        if (! Arr::get($record->context, 'exception')) {
+        if ($record instanceof LogRecord) {
+            $record = $record->toArray();
+        }
+
+        if (! Arr::get($record, 'context.exception')) {
             $errors = collect(
                 [
                     'Request URL: '.request()->fullUrl(),
                     'Request data: '.json_encode(request()->input()),
-                    'Error: '.json_encode($record->toArray()),
+                    'Error: '.json_encode($record),
                 ]
             );
 
@@ -44,7 +48,7 @@ class LogHandler extends AbstractProcessingHandler
         front()
             ->post(
                 "/conversations/$conversation/comments",
-                $this->convertErrorToFrontMessage(Arr::get($record->context, 'exception'))
+                $this->convertErrorToFrontMessage(Arr::get($record, 'context.exception'))
             )->throw();
     }
 
