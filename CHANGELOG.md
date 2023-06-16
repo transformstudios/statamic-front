@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v2.0.4 - 2023-06-16
+
+### 🐛 Fixed
+
+- Fix build [@edalzell](https://github.com/edalzell) (#14)
+
 ## v2.0.3 - 2023-06-16
 
 ### 🐛 Fixed
