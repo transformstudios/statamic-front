@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v2.0.3 - 2023-06-16
+
+### 🐛 Fixed
+
+- Handle both L9 & L10 [@edalzell](https://github.com/edalzell) (#13)
+
 ## v2.0.2 - 2023-06-14
 
 ### 🐛 Fixed
