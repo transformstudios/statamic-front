@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.0 - 2024-05-15
+
+### 🚀 New
+
+- Statamic 5 & Laravel 11 [@edalzell](https://github.com/edalzell) (#15)
+
 ## v2.0.4 - 2023-06-16
 
 ### 🐛 Fixed
