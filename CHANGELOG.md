@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.0.1 - 2024-05-29
+
+### 🐛 Fixed
+
+- Limit the body [@edalzell](https://github.com/edalzell) (#16)
+
 ## v3.0 - 2024-05-15
 
 ### 🚀 New
