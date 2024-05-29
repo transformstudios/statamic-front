@@ -7,6 +7,7 @@ use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as Monolog;
 use Monolog\LogRecord;
 use Statamic\Support\Arr;
+use Statamic\Support\Str;
 use Throwable;
 
 class LogHandler extends AbstractProcessingHandler
@@ -39,7 +40,7 @@ class LogHandler extends AbstractProcessingHandler
             front()
                 ->post(
                     "/conversations/$conversation/comments",
-                    ['body' => $errors->implode(PHP_EOL)]
+                    ['body' => Str::limit($errors->implode(PHP_EOL), 10000)]
                 )->throw();
 
             return;
