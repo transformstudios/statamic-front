@@ -2,11 +2,10 @@
 
 namespace TransformStudios\Front\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Statamic\Facades\User;
 
-class ConfigController extends Controller
+class ConfigController
 {
     public function __invoke(): JsonResponse
     {
