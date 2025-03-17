@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.0.2 - 2025-03-17
+
+### 🐛 Fixed
+
+- Remove dependency on app controller [@edalzell](https://github.com/edalzell) (#17)
+
 ## v3.0.1 - 2024-05-29
 
 ### 🐛 Fixed
