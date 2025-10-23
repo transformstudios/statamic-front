@@ -9,9 +9,6 @@ class Logger
     /** @throws \Illuminate\Contracts\Container\BindingResolutionException */
     public function __invoke(array $config)
     {
-        return new Monolog(
-            config('app.name'),
-            [new LogHandler($config)]
-        );
+        return new Monolog(config('app.name'), [new LogHandler($config)]);
     }
 }

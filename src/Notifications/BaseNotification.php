@@ -15,9 +15,8 @@ class BaseNotification extends Notification implements ShouldQueue
         public string $key,
         public string $subject,
         public string $renderedView,
-        public Collection $users)
-    {
-    }
+        public Collection $users
+    ) {}
 
     public function via($notifiable)
     {
