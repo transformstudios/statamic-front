@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.1.0 - 2025-10-23
+
+### 🚀 New
+
+- Support Laravel 12 & Statamic 6 [@edalzell](https://github.com/edalzell) (#19)
+
 ## v3.0.2 - 2025-03-17
 
 ### 🐛 Fixed
