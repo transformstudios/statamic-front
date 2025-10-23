@@ -5,7 +5,6 @@ namespace TransformStudios\Front\Notifications;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 use Statamic\Auth\User;
 
 class Channel
@@ -39,17 +38,13 @@ class Channel
 
     private function post(string $segment, string $id, array $data): Response
     {
-        return Http::withToken(config('front.api_token'))
-            ->baseUrl('https://api2.frontapp.com')
+        return front()
             ->post("/$segment/$id/messages", $data)
             ->throw();
     }
 
     private function getConversationId(Response $response): string
     {
-        return last(explode(
-            '/',
-            Arr::get($response, '_links.related.conversation')
-        ));
+        return last(explode('/', Arr::get($response, '_links.related.conversation')));
     }
 }
