@@ -1,5 +1,12 @@
 # Front Changelog
 
+## v3.1.1 - 2025-12-05
+
+### 🐛 Fixed
+
+- Use custom CP CSS  [@edalzell](https://github.com/edalzell) (#20)
+- Move `logging` config from Simple to Front [@edalzell](https://github.com/edalzell) (#20)
+
 ## v3.1.0 - 2025-10-23
 
 ### 🚀 New
