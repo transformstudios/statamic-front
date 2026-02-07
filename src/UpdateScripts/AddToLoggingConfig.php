@@ -26,6 +26,5 @@ class AddToLoggingConfig extends UpdateScript
                 'via' => \TransformStudios\Front\Logging\Logger::class,
                 'level' => ConfigWriter::f()->env('FRONT_LOGGING_LEVEL', 'error'),
             ])->save();
-        dd('saved');
     }
 }
