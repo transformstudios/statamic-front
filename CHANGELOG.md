@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.1.2 - 2026-02-07
+
+### 🐛 Fixed
+
+- Remove debug code [@edalzell](https://github.com/edalzell) (#21)
+
 ## v3.1.1 - 2025-12-05
 
 ### 🐛 Fixed
