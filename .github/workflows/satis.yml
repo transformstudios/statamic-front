@@ -1,0 +1,17 @@
+name: Satis
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  rebuild-satis:
+    name: 'Rebuild Satis Repository'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        uses: jbrooksuk/laravel-forge-action@v1.0.2
+        with:
+          trigger_url: ${{ secrets.SATIS_TRIGGER_URL }}
