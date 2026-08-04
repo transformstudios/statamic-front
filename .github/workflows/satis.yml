@@ -12,6 +12,14 @@ jobs:
 
     steps:
       - name: Deploy
-        uses: jbrooksuk/laravel-forge-action@v1.0.2
-        with:
-          trigger_url: ${{ secrets.SATIS_TRIGGER_URL }}
+        run: |
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --user-agent "Satis-GitHubAction/1.0" \
+            --max-time 5 \
+            --connect-timeout 5 \
+            --request POST \
+            --user "${{ secrets.SATIS_TRIGGER_AUTH_USER }}:${{ secrets.SATIS_TRIGGER_AUTH_PASS }}" \
+            "${{ secrets.SATIS_TRIGGER_URL }}"
