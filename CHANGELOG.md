@@ -1,5 +1,17 @@
 # Front Changelog
 
+## v3.2.0 - 2026-09-16
+
+### 🚀 New
+
+- Render log context in Front error comments [@edalzell](https://github.com/edalzell) (#24)
+
+### 🧰 Maintenance
+
+- Switch Front to PR-gated shared release workflows [@edalzell](https://github.com/edalzell) (#25)
+- Post to satis with auth [@edalzell](https://github.com/edalzell) (#23)
+- Update satis [@edalzell](https://github.com/edalzell) (#22)
+
 ## v3.1.2 - 2026-02-07
 
 ### 🐛 Fixed
