@@ -29,7 +29,7 @@ class LogHandler extends AbstractProcessingHandler
             $record = $record->toArray();
         }
 
-        if (! Arr::get($record, 'context.exception')) {
+        if (! $error = Arr::get($record, 'context.exception')) {
             $errors = collect([
                 'Request URL: '.request()->fullUrl(),
                 'Request data: '.json_encode(request()->input()),
@@ -48,23 +48,32 @@ class LogHandler extends AbstractProcessingHandler
         front()
             ->post(
                 "/conversations/$conversation/comments",
-                $this->convertErrorToFrontMessage(Arr::get($record, 'context.exception'))
+                $this->convertErrorToFrontMessage($error, Arr::except(Arr::get($record, 'context', []), 'exception'))
             )->throw();
     }
 
-    private function convertErrorToFrontMessage(Throwable $error): array
+    private function convertErrorToFrontMessage(Throwable $error, array $context): array
     {
-        return ['body' => $this->formatErrorLines($error)->implode(PHP_EOL)];
+        return ['body' => $this->formatErrorLines($error, $context)->implode(PHP_EOL)];
     }
 
-    private function formatErrorLines(Throwable $error): Collection
+    private function formatContext(array $context): Collection
+    {
+        return collect($context)
+            ->map(fn ($value, string $key) => '* '.$key.': '.(is_string($value) ? $value : json_encode($value)))
+            ->values();
+    }
+
+    private function formatErrorLines(Throwable $error, array $context): Collection
     {
         return collect([
             'Request URL: '.request()->fullUrl(),
             'Request data: '.json_encode(request()->input()),
             '**'.$error->getMessage().'**',
             '* '.$error->getFile().' ('.$error->getLine().')',
-        ])->merge($this->formatStackTrace($error));
+        ])
+            ->merge($this->formatContext($context))
+            ->merge($this->formatStackTrace($error));
     }
 
     private function formatStackTrace(Throwable $error): Collection
