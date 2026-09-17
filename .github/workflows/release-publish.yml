@@ -11,3 +11,8 @@ jobs:
       contents: write
     with:
       upload_assets: true
+
+  rebuild-satis:
+    needs: publish
+    uses: ./.github/workflows/satis.yml
+    secrets: inherit
