@@ -1,9 +1,7 @@
 name: Satis
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+  workflow_call:
 
 jobs:
   rebuild-satis:
