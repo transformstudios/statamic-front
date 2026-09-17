@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.2.2 - 2026-09-17
+
+### 🐛 Fixed
+
+- Rebuild Satis after the release publishes [@edalzell](https://github.com/edalzell) (#29)
+
 ## v3.2.1 - 2026-09-17
 
 ### 🐛 Fixed
