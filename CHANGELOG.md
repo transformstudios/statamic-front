@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v3.2.1 - 2026-09-17
+
+### 🐛 Fixed
+
+- Serve Front dist zips from Satis [@edalzell](https://github.com/edalzell) (#27)
+
 ## v3.2.0 - 2026-09-16
 
 ### 🚀 New
