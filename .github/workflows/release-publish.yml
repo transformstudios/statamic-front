@@ -6,10 +6,13 @@ on:
 
 jobs:
   publish:
-    uses: edalzell/github-workflows/.github/workflows/release-publish.yml@ff87c860196291cd1c1f43a45c294ff69df8ee62 # v1.4.0
+    uses: edalzell/github-workflows/.github/workflows/release-publish.yml@9f72f0b77303abff9903b16da75346b1eb1c3785 # v1.4.0
     permissions:
       contents: write
-    secrets:
-      release_token: ${{ secrets.RELEASE_TOKEN }}
     with:
       upload_assets: true
+
+  rebuild-satis:
+    needs: publish
+    uses: ./.github/workflows/satis.yml
+    secrets: inherit
