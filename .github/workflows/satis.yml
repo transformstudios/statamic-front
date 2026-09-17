@@ -3,8 +3,6 @@ name: Satis
 on:
   workflow_call:
   workflow_dispatch:
-  release:
-    types: [published]
 
 jobs:
   rebuild-satis:
