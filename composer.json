@@ -2,7 +2,6 @@
     "name": "transformstudios/front",
     "require": {
         "php": "^8.5",
-        "pixelfear/composer-dist-plugin": "^0.1.4",
         "statamic/cms": "^6.0"
     },
     "require-dev": {
@@ -23,10 +22,6 @@
         }
     },
     "extra": {
-        "download-dist": {
-            "url": "https://pkgs.trns.fm/assets/front/{$version}/dist.tar.gz",
-            "path": "dist"
-        },
         "statamic": {
             "name": "Statamic Front",
             "description": "Statamic Front addon"
@@ -39,7 +34,6 @@
     },
     "config": {
         "allow-plugins": {
-            "pixelfear/composer-dist-plugin": true,
             "pestphp/pest-plugin": true
         }
     }
