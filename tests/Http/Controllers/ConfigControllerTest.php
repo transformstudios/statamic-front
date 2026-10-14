@@ -23,6 +23,12 @@ it('returns user details when configured', function () {
         ]);
 });
 
+it('falls back to first and last name', function () {
+    $user = tap(User::make()->email('erin@transformstudios.com')->set('first_name', 'Erin')->set('last_name', 'Dalzell'))->save();
+
+    $this->actingAs($user)->getJson('/!/front/config')->assertJson(['name' => 'Erin Dalzell']);
+});
+
 it('returns nulls for a guest', function () {
     $this->getJson('/!/front/config')
         ->assertOk()
