@@ -16,8 +16,8 @@ it('provides chat config to the control panel script for the current user', func
     expect(Statamic::jsonVariables(request())['front'])->toBe([
         'chatId' => 'chat-id',
         'email' => 'erin@transformstudios.com',
-        'hash' => hash_hmac('sha256', 'erin@transformstudios.com', 'secret'),
         'name' => 'Erin',
+        'userHash' => hash_hmac('sha256', 'erin@transformstudios.com', 'secret'),
     ]);
 });
 
