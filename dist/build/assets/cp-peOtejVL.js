@@ -1,1 +1,0 @@
-Statamic.booted(()=>{let t=Statamic.$config.get("front");if(t&&t.chatId){var a=document.createElement("script");a.src="https://chat-assets.frontapp.com/v1/chat.bundle.js",document.body.appendChild(a),a.addEventListener("load",()=>{window.FrontChat("init",{chatId:t.chatId,email:t.email,name:t.name,userHash:t.hash,useDefaultLauncher:!0})})}});

@@ -1,0 +1,1 @@
+Statamic.booted(()=>{const e=Statamic.$config.get("front");if(!e)return;const t=document.createElement("script");t.src="https://chat-assets.frontapp.com/v1/chat.bundle.js",t.addEventListener("load",()=>window.FrontChat("init",{...e,useDefaultLauncher:!0})),document.body.appendChild(t)});
