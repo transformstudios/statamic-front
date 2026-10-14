@@ -1,5 +1,18 @@
 # Front Changelog
 
+## v4.0.0 - 2026-10-14
+
+- Strip Front down to the chat widget [@edalzell](https://github.com/edalzell) (#31)
+
+### 🚀 New
+
+- Render the front-end chat with a front:chat tag [@edalzell](https://github.com/edalzell) (#34)
+
+### 🧰 Maintenance
+
+- Simplify the chat code for Statamic 6 [@edalzell](https://github.com/edalzell) (#33)
+- Commit built CP assets [@edalzell](https://github.com/edalzell) (#32)
+
 ## v3.2.2 - 2026-09-17
 
 ### 🐛 Fixed
