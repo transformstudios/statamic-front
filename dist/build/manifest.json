@@ -1,12 +1,17 @@
 {
   "resources/css/cp.css": {
-    "file": "assets/cp-aa7cd9af.css",
+    "file": "assets/cp-DPchgS2m.css",
+    "src": "resources/css/cp.css",
     "isEntry": true,
-    "src": "resources/css/cp.css"
+    "name": "cp",
+    "names": [
+      "cp.css"
+    ]
   },
   "resources/js/cp.js": {
-    "file": "assets/cp-4834b1d9.js",
-    "isEntry": true,
-    "src": "resources/js/cp.js"
+    "file": "assets/cp-peOtejVL.js",
+    "name": "cp",
+    "src": "resources/js/cp.js",
+    "isEntry": true
   }
 }
