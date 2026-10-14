@@ -1,9 +1,10 @@
 /node_modules
 /vendor
-/dist
 /mix-manifest.json
 /composer.lock
 /yarn.lock
 /package-lock.json
 /.phpunit.cache
 /.phpunit.result.cache
+/dist/hot
+/tests/__fixtures__
