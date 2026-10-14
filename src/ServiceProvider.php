@@ -2,14 +2,11 @@
 
 namespace TransformStudios\Front;
 
-use Illuminate\Notifications\ChannelManager;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\View;
 use Statamic\Facades\User as UserFacade;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Statamic;
 use Statamic\Support\Arr;
-use TransformStudios\Front\Notifications\Channel;
 
 class ServiceProvider extends AddonServiceProvider
 {
@@ -35,13 +32,6 @@ class ServiceProvider extends AddonServiceProvider
         //     __DIR__.'/../resources/views',
         //     'front'
         // );
-    }
-
-    public function register()
-    {
-        Notification::resolved(
-            fn (ChannelManager $service) => $service->extend('front', fn ($app) => new Channel)
-        );
     }
 
     private function bootScript()
