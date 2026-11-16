@@ -1,5 +1,11 @@
 # Front Changelog
 
+## v4.0.1 - 2026-11-16
+
+### 🐛 Fixed
+
+- Support PHP 8.3 [@edalzell](https://github.com/edalzell) (#37)
+
 ## v4.0.0 - 2026-10-14
 
 - Strip Front down to the chat widget [@edalzell](https://github.com/edalzell) (#31)
